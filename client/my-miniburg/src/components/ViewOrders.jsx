@@ -20,13 +20,24 @@ function ViewOrders() {
   return (
     <div>
       <h2>Orders</h2>
-      {orders.map((order, index) => (
-        <div key={index} className='order-item'>
-          <h3>User: {order.user}</h3>
-          <p>Details: {order.details}</p>
-          <p>Payment Method: {order.paymentMethod}</p>
-        </div>
-      ))}
+      <table className='order-table'>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Details</th>
+            <th>Payment Method</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders.map((order, index) => (
+            <tr key={index} className='order-item'>
+              <td>{order.user}</td>
+              <td>{order.details}</td>
+              <td>{order.paymentMethod}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
