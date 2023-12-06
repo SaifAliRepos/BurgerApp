@@ -4,7 +4,7 @@ export const login = async (email, password) => {
   try {
     const body = { email, password };
     const user = await api.post('/users/login', body);
-    return user.data;
+    return user;
 
   } catch (err) {
     console.log(err);
@@ -16,8 +16,7 @@ export const singUp = async (email, password) => {
   try {
     const body = { email, password };
     const user = await api.post('/users/new', body);
-    console.log(user);
-    return true;
+    return user.data;
 
   } catch (err) {
     console.log(err);

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { login } from '../actions/user';
+import { login, singUp } from '../actions/user';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,10 +19,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const loggedIn = await login(email, password);
-    if (loggedIn) {
-      navigate(`/users/${loggedIn._id}`);
-      authorizeUser(true);
+    console.log(e.nativeEvent.submitter.textContent);
+    if (e.nativeEvent.submitter.textContent === 'Register') {
+      await singUp(email, password);
+    } else if (e.nativeEvent.submitter.textContent === 'Login') {
+      const loggedIn = await login(email, password);
+      console.log(loggedIn);
+      if (loggedIn) {
+        navigate(`/users/${loggedIn._id}`);
+        authorizeUser(true);
+      }
     }
   };
 
@@ -36,6 +42,7 @@ const Login = () => {
             placeholder='Enter email'
             value={email}
             onChange={(e) => onChange(e)}
+            required
           />
         </Form.Group>
         <Form.Group className='mb-3 px-5' controlId='formBasicPassword'>
@@ -45,10 +52,19 @@ const Login = () => {
             placeholder='Password'
             value={password}
             onChange={(e) => onChange(e)}
+            required
           />
         </Form.Group>
-        <Button variant='success px-5' type='submit'>
-          Submit
+        <Button variant='success px-5' type='submit' data-action='login'>
+          Login
+        </Button>
+        <br />
+        <Button
+          variant='primary px-5 mt-2'
+          type='submit'
+          data-action='register'
+        >
+          Register
         </Button>
       </Form>
     </div>
