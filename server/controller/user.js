@@ -41,21 +41,24 @@ const getAllUsers = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const user = await User.find({
-      $and: [
-        { user: req.body.user },
-        { password: req.body.password }
-      ]
+    const user = await User.findOne({
+      email: req.body.email,
+      password: req.body.password
     });
 
-    if (!user.length > 0) {
-      return res.status(500).json('Server error')
+    console.log(user);
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
-    return res.status(200).json(user[0])
+
+    return res.status(201).json(user);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
-}
+};
+
+
 
 module.exports = {
   postUser, getAllUsers, loginUser

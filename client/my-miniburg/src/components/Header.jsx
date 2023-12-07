@@ -39,7 +39,9 @@ const Header = () => {
       <Navbar.Toggle aria-controls='responsive-navbar-nav' />
       <Navbar.Collapse id='responsive-navbar-nav'>
         <Nav className='me-auto'>
-          <Nav.Link onClick={() => navigate('/my_orders')}>Orders</Nav.Link>
+          {auth && (
+            <Nav.Link onClick={() => navigate('/my_orders')}>Orders</Nav.Link>
+          )}
         </Nav>
         <Nav>
           <Nav.Link onClick={() => navigate('/')}>Burger Builder</Nav.Link>
